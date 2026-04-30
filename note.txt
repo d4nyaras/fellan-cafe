@@ -1,0 +1,15 @@
+Schema for cafe places:
+
+name                 TEXT
+latitude             DOUBLE PRECISION
+longitude            DOUBLE PRECISION
+avg_noise_level      FLOAT
+seating_density      FLOAT
+lighting_warmth      FLOAT
+natural_light_ratio  FLOAT
+has_food_menu        BOOLEAN
+coffee_quality       FLOAT
+has_wifi             BOOLEAN
+avg_crowd_index      FLOAT
+price_index          FLOAT
+avg_rating           FLOAT
