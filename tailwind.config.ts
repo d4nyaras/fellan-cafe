@@ -1,31 +1,22 @@
-const config = {
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+import type { Config } from "tailwindcss";
 
+const color = (name: string) => `rgb(var(${name}) / <alpha-value>)`;
+
+const config: Config = {
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       colors: {
-        /* Backgrounds */
-        background: "var(--color-bg)",
-        "background-muted": "var(--color-bg-muted)",
-
-        /* Text */
-        foreground: "var(--color-fg)",
-        "foreground-muted": "var(--color-fg-muted)",
-
-        /* Border */
-        border: "var(--color-border)",
-
-        /* Brand */
-        primary: "var(--color-primary)",
-        "primary-content": "var(--color-primary-content)",
-
-        /* Feedback */
-        success: "var(--color-success)",
-        warning: "var(--color-warning)",
-        error: "var(--color-error)",
-        info: "var(--color-info)",
+        background: color("--color-bg"),
+        surface: color("--color-surface"),
+        foreground: color("--color-text"),
+        muted: color("--color-muted"),
+        border: color("--color-border"),
+        primary: color("--color-primary"),
+        "primary-hover": color("--color-primary-hover"),
+        "primary-text": color("--color-primary-text"),
+        overlay: color("--color-overlay"),
       },
-
       borderRadius: {
         sm: "var(--radius-sm)",
         base: "var(--radius-base)",
@@ -33,13 +24,17 @@ const config = {
         xl: "var(--radius-xl)",
         full: "var(--radius-full)",
       },
-
       boxShadow: {
         sm: "var(--shadow-sm)",
         md: "var(--shadow-md)",
         lg: "var(--shadow-lg)",
       },
-
+      blur: {
+        bg: "var(--blur-bg)",
+      },
+      backdropBlur: {
+        glass: "var(--blur-glass)",
+      },
       fontSize: {
         xs: "var(--font-size-xs)",
         sm: "var(--font-size-sm)",
@@ -49,7 +44,6 @@ const config = {
         "2xl": "var(--font-size-2xl)",
         "3xl": "var(--font-size-3xl)",
       },
-
       spacing: {
         1: "var(--space-1)",
         2: "var(--space-2)",
@@ -58,12 +52,11 @@ const config = {
         5: "var(--space-5)",
         6: "var(--space-6)",
       },
-      //
-      //       transitionDuration: {
-      //         fast: "var(--transition-fast)",
-      //         medium: "var(--transition-medium)",
-      //         slow: "var(--transition-slow)",
-      //       },
+      transitionDuration: {
+        fast: "var(--transition-fast)",
+        medium: "var(--transition-medium)",
+        slow: "var(--transition-slow)",
+      },
     },
   },
 };
