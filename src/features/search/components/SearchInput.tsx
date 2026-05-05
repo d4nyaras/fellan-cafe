@@ -1,21 +1,27 @@
 "use client";
 
 import { useState, KeyboardEvent } from "react";
-import { useSearchNavigation } from "../hooks/useSearchNavigation";
 import { FiSearch } from "react-icons/fi";
 import clsx from "clsx";
 
 interface SearchInputProps {
   compact?: boolean;
+  onSearch: (query: string) => void;
+  isLoading?: boolean;
+  initialValue?: string;
 }
 
-export function SearchInput({ compact = false }: SearchInputProps) {
-  const { currentQuery, goToSearch } = useSearchNavigation();
-  const [value, setValue] = useState(decodeURIComponent(currentQuery || ""));
+export function SearchInput({
+  compact = false,
+  onSearch,
+  isLoading = false,
+  initialValue = "",
+}: SearchInputProps) {
+  const [value, setValue] = useState(initialValue);
 
   const handleSearch = () => {
-    if (!value.trim()) return;
-    goToSearch(value);
+    if (!value.trim() || isLoading) return;
+    onSearch(value);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -40,13 +46,20 @@ export function SearchInput({ compact = false }: SearchInputProps) {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={handleKeyDown}
+        disabled={isLoading}
       />
 
       <button
         onClick={handleSearch}
-        className="ml-3 rounded-xl bg-primary px-8 py-4 text-sm font-medium text-primary-text shadow-md transition hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary/35"
+        disabled={isLoading || !value.trim()}
+        className={clsx(
+          "ml-3 rounded-xl bg-primary px-8 py-4 text-sm font-medium text-primary-text shadow-md transition focus:outline-none focus:ring-2 focus:ring-primary/35",
+          isLoading || !value.trim()
+            ? "opacity-50 cursor-not-allowed"
+            : "hover:bg-primary-hover",
+        )}
       >
-        Search
+        {isLoading ? "Searching..." : "Search"}
       </button>
     </div>
   );

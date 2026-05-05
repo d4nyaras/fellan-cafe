@@ -1,78 +1,82 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ResultCard } from "./ResultCard";
+import { SearchPreferences } from "../types/preference";
 
 interface SearchResultsProps {
-  query: string;
+  preferences: SearchPreferences | null;
+  isLoading: boolean;
+  error: string | null;
 }
 
-export function SearchResults({ query }: SearchResultsProps) {
-  const fakeResults = [
-    {
-      title: "Aramis Café",
-      description:
-        "Cozy atmosphere, great for laptop work, stable internet connection.",
-      location: "Tehran, Valiasr Street",
-      mood: "Quiet work spot",
-      match: "94% match",
-    },
-    {
-      title: "Workspace Café",
-      description: "A hybrid coworking–café space with large tables.",
-      location: "Tehran, Vanak",
-      mood: "Laptop friendly",
-      match: "89% match",
-    },
-    {
-      title: "Brew & Focus",
-      description: "Minimalist design, calm vibe, plenty of power outlets.",
-      location: "Tehran, Jordan",
-      mood: "Deep work zone",
-      match: "92% match",
-    },
-    {
-      title: "Café Nova",
-      description: "Bright interior, comfortable seating, fast Wi‑Fi.",
-      location: "Tehran, Enghelab",
-      mood: "Study friendly",
-      match: "87% match",
-    },
-    {
-      title: "Urban Grind",
-      description: "Industrial-style café with quiet corners for work.",
-      location: "Tehran, Shariati",
-      mood: "Work & chill",
-      match: "90% match",
-    },
-    {
-      title: "Calm Corner Café",
-      description: "Soft music, warm lighting, stable internet.",
-      location: "Tehran, Sa'adat Abad",
-      mood: "Relaxed productivity",
-      match: "93% match",
-    },
-  ];
+const PREFERENCE_LABELS: Record<keyof SearchPreferences, string> = {
+  quiet: "Quiet",
+  romantic: "Romantic",
+  privacy: "Privacy",
+  price_level: "Price Level",
+  rating: "Rating",
+  suitable_for_solo: "Suitable For Solo",
+  suitable_for_date: "Suitable For Date",
+};
+
+export function SearchResults({
+  preferences,
+  isLoading,
+  error,
+}: SearchResultsProps) {
+  if (isLoading) {
+    return (
+      <div className="mt-8 flex justify-center">
+        <div className="text-muted">Analyzing your preferences...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="mt-8 rounded-xl bg-red-50 p-6 text-red-600">
+        <p className="font-medium">Error</p>
+        <p className="mt-1 text-sm">{error}</p>
+      </div>
+    );
+  }
+
+  if (!preferences) {
+    return null;
+  }
+
+  const preferenceEntries = (
+    Object.entries(preferences) as [keyof SearchPreferences, number][]
+  ).map(([key, value]) => ({
+    label: PREFERENCE_LABELS[key],
+    value,
+  }));
 
   return (
-    <motion.section
-      className="mx-auto mt-6 max-w-4xl pb-10 text-foreground"
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-    >
-      <div className="flex flex-col gap-4 max-h-[600px] overflow-auto">
-        {fakeResults.map((item, index) => (
-          <motion.div
-            key={item.title}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.06, duration: 0.3 }}
-          >
-            <ResultCard {...item} />
-          </motion.div>
+    <div className="mt-8 space-y-4">
+      <h2 className="text-xl font-semibold text-foreground">
+        Your Preferences
+      </h2>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        {preferenceEntries.map(({ label, value }) => (
+          <div key={label} className="rounded-xl bg-surface/85 p-4 shadow-md">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-foreground">
+                {label}
+              </span>
+              <span className="text-lg font-semibold text-primary">
+                {(value * 100).toFixed(0)}%
+              </span>
+            </div>
+            <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted/20">
+              <div
+                className="h-full rounded-full bg-primary transition-all"
+                style={{ width: `${value * 100}%` }}
+              />
+            </div>
+          </div>
         ))}
       </div>
-    </motion.section>
+    </div>
   );
 }

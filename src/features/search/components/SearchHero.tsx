@@ -4,7 +4,12 @@ import { motion } from "framer-motion";
 import { SearchInput } from "./SearchInput";
 import { QuickActions } from "./QuickActions";
 
-export function SearchHero() {
+interface SearchHeroProps {
+  onSearch: (query: string) => void;
+  isLoading?: boolean;
+}
+
+export function SearchHero({ onSearch, isLoading = false }: SearchHeroProps) {
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -27,7 +32,11 @@ export function SearchHero() {
       </p>
 
       <div className="mt-4 w-full md:px-10">
-        <SearchInput compact={false} />
+        <SearchInput
+          compact={false}
+          onSearch={onSearch}
+          isLoading={isLoading}
+        />
       </div>
 
       <QuickActions />
