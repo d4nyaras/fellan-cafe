@@ -19,10 +19,7 @@ function normalizeScoreValue(value: number) {
   return Math.min(Math.max(value, 0), 1);
 }
 
-export function calculateCafeScore(
-  preferences: SearchPreferences,
-  cafe: Cafe,
-) {
+export function calculateCafeScore(preferences: SearchPreferences, cafe: Cafe) {
   return SCORING_FIELDS.reduce((score, field) => {
     const preferenceValue = normalizeScoreValue(preferences[field]);
     const cafeValue = normalizeScoreValue(cafe[field]);
@@ -31,11 +28,7 @@ export function calculateCafeScore(
   }, 0);
 }
 
-export function rankCafes(
-  preferences: SearchPreferences,
-  cafes: Cafe[],
-  limit = 3,
-): RankedCafe[] {
+export function rankCafes(preferences: SearchPreferences, cafes: Cafe[], limit = 3): RankedCafe[] {
   return cafes
     .map((cafe) => ({
       ...cafe,

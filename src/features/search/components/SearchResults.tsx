@@ -1,7 +1,7 @@
 "use client";
 
-import { SearchPreferences } from "../types/preference";
 import { RankedCafe } from "../types/cafe";
+import { SearchPreferences } from "../types/preference";
 import { ResultCard } from "./ResultCard";
 
 interface SearchResultsProps {
@@ -21,12 +21,7 @@ const PREFERENCE_LABELS: Record<keyof SearchPreferences, string> = {
   suitable_for_date: "Suitable For Date",
 };
 
-export function SearchResults({
-  preferences,
-  results,
-  isLoading,
-  error,
-}: SearchResultsProps) {
+export function SearchResults({ preferences, results, isLoading, error }: SearchResultsProps) {
   if (isLoading) {
     return (
       <div className="mt-8 flex justify-center">
@@ -58,12 +53,10 @@ export function SearchResults({
   return (
     <div className="mt-8 space-y-8">
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold text-foreground">
-          Top cafe matches
-        </h2>
+        <h2 className="text-xl font-semibold text-foreground">Top cafe matches</h2>
 
         {results.length > 0 ? (
-          <div className="space-y-4 max-h-[600px] overflow-auto pb-10">
+          <div className="max-h-[600px] space-y-4 overflow-auto pb-10">
             {results.map((cafe) => (
               <ResultCard
                 key={cafe.id}
@@ -82,17 +75,13 @@ export function SearchResults({
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold text-foreground">
-          Your Preferences
-        </h2>
+        <h2 className="text-xl font-semibold text-foreground">Your Preferences</h2>
 
         <div className="grid gap-4 sm:grid-cols-2">
           {preferenceEntries.map(({ label, value }) => (
             <div key={label} className="rounded-xl bg-surface/85 p-4 shadow-md">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-foreground">
-                  {label}
-                </span>
+                <span className="text-sm font-medium text-foreground">{label}</span>
                 <span className="text-lg font-semibold text-primary">
                   {(value * 100).toFixed(0)}%
                 </span>

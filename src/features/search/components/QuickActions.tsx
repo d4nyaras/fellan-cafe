@@ -1,8 +1,8 @@
 "use client";
 
-import { useSearchNavigation } from "../hooks/useSearchNavigation";
 import { FiBookOpen, FiCoffee } from "react-icons/fi";
 import { LuCroissant } from "react-icons/lu";
+import { useSearchNavigation } from "../hooks/useSearchNavigation";
 
 const SUGGESTIONS = [
   { label: "Quiet study café", icon: <FiBookOpen className="text-lg" /> },
@@ -17,23 +17,12 @@ export function QuickActions() {
   const { goToSearch } = useSearchNavigation();
 
   return (
-    <div className="mt-6 flex flex-wrap gap-3 justify-center">
+    <div className="mt-6 flex flex-wrap justify-center gap-3">
       {SUGGESTIONS.map((item) => (
         <button
           key={item.label}
           onClick={() => goToSearch(item.label)}
-          className="
-            flex items-center gap-2
-            px-5 py-2
-            rounded-2xl
-            bg-surface/70
-            text-muted
-            text-sm font-medium
-            border border-border/60
-            shadow-sm
-            hover:bg-surface/90
-            transition
-          "
+          className="flex items-center gap-2 rounded-2xl border border-border/60 bg-surface/70 px-5 py-2 text-sm font-medium text-muted shadow-sm transition hover:bg-surface/90"
         >
           {item.icon}
           {item.label}

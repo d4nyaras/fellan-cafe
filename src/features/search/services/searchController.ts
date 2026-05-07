@@ -1,6 +1,6 @@
 import { getAllCafes } from "../repositories/cafeRepository";
-import { OpenAIService } from "./gapGpt";
 import { rankCafes } from "./cafeScoringService";
+import { OpenAIService } from "./gapGpt";
 
 export async function searchCafes(query: string, apiKey: string) {
   const openAIService = new OpenAIService(apiKey);

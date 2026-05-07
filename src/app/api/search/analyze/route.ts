@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import { SearchAnalysisResponse } from "@/features/search/types/preference";
-import { searchCafes } from "@/features/search/services/searchController";
 import { DatabaseConfigurationError } from "@/features/search/repositories/cafeRepository";
+import { searchCafes } from "@/features/search/services/searchController";
+import { SearchAnalysisResponse } from "@/features/search/types/preference";
+import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
@@ -15,10 +15,7 @@ export async function POST(request: NextRequest) {
 
     const apiKey = process.env.GAPGPT_API_KEY;
     if (!apiKey) {
-      return NextResponse.json(
-        { error: "API key not configured" },
-        { status: 500 },
-      );
+      return NextResponse.json({ error: "API key not configured" }, { status: 500 });
     }
 
     const response: SearchAnalysisResponse = await searchCafes(query, apiKey);
@@ -31,9 +28,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json(
-      { error: "Failed to analyze search query" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Failed to analyze search query" }, { status: 500 });
   }
 }
