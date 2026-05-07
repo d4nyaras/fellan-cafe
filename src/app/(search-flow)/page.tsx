@@ -1,36 +1,60 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SearchHero } from "@/features/search/components/SearchHero";
 import { SearchInput } from "@/features/search/components/SearchInput";
 import { SearchResults } from "@/features/search/components/SearchResults";
 import { useSearchAnalysis } from "@/features/search/hooks/useSearchAnalysis";
+import { RankedCafe } from "@/features/search/types/cafe";
 import { SearchPreferences } from "@/features/search/types/preference";
 export default function SearchFlowPage() {
   const searchParams = useSearchParams();
   const urlQuery = searchParams.get("q") || "";
 
-  const [currentQuery, setCurrentQuery] = useState("");
+  const [currentQuery, setCurrentQuery] = useState(urlQuery);
   const [preferences, setPreferences] = useState<SearchPreferences | null>(
     null,
   );
+  const [results, setResults] = useState<RankedCafe[]>([]);
 
   const { mutate: analyzeSearch, isPending, error } = useSearchAnalysis();
+  const activeQuery = urlQuery || currentQuery;
+
+  const runSearch = useCallback(
+    (query: string) => {
+      analyzeSearch(query, {
+        onSuccess: (data) => {
+          setPreferences(data.preferences);
+          setResults(data.results);
+        },
+        onError: () => {
+          setPreferences(null);
+          setResults([]);
+        },
+      });
+    },
+    [analyzeSearch],
+  );
 
   const handleSearch = (query: string) => {
-    setCurrentQuery(query);
-    analyzeSearch(query, {
-      onSuccess: (data) => setPreferences(data.preferences),
-      onError: () => setPreferences(null),
-    });
+    const trimmedQuery = query.trim();
+
+    if (!trimmedQuery) {
+      return;
+    }
+
+    setCurrentQuery(trimmedQuery);
+    runSearch(trimmedQuery);
   };
 
   useEffect(() => {
-    if (urlQuery && urlQuery !== currentQuery) {
-      handleSearch(urlQuery);
+    if (!urlQuery) {
+      return;
     }
-  }, [urlQuery]);
+
+    runSearch(urlQuery);
+  }, [urlQuery, runSearch]);
 
   return (
     <main className="h-full">
@@ -40,20 +64,22 @@ export default function SearchFlowPage() {
         </header>
 
         <div className="flex-1">
-          {!currentQuery && (
+          {!activeQuery && (
             <SearchHero onSearch={handleSearch} isLoading={isPending} />
           )}
 
-          {currentQuery && (
+          {activeQuery && (
             <section>
               <SearchInput
+                key={activeQuery}
                 compact={true}
                 onSearch={handleSearch}
                 isLoading={isPending}
-                initialValue={currentQuery}
+                initialValue={activeQuery}
               />
               <SearchResults
                 preferences={preferences}
+                results={results}
                 isLoading={isPending}
                 error={error?.message || null}
               />

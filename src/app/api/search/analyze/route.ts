@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { OpenAIService } from "@/features/search/services/gapGpt";
 import { SearchAnalysisResponse } from "@/features/search/types/preference";
+import { searchCafes } from "@/features/search/services/searchController";
+import { DatabaseConfigurationError } from "@/features/search/repositories/cafeRepository";
+
+export const runtime = "nodejs";
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,30 +21,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const openAIService = new OpenAIService(apiKey);
-    const preferences = await openAIService.analyzeSearchQuery(query);
-
-    const response: SearchAnalysisResponse = { preferences };
+    const response: SearchAnalysisResponse = await searchCafes(query, apiKey);
 
     return NextResponse.json(response);
   } catch (error) {
     console.error("Search analysis error:", error);
+
+    if (error instanceof DatabaseConfigurationError) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
     return NextResponse.json(
       { error: "Failed to analyze search query" },
       { status: 500 },
     );
   }
 }
-
-//
-// response {
-//   preferences: {
-//     quiet: 1,
-//     romantic: 0,
-//     privacy: 0.8,
-//     price_level: 0.5,
-//     rating: 0.7,
-//     suitable_for_solo: 1,
-//     suitable_for_date: 0
-//   }
-// }

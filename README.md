@@ -14,6 +14,17 @@ pnpm dev
 bun dev
 ```
 
+## Environment
+
+The search API needs these variables in `.env.local`:
+
+```bash
+GAPGPT_API_KEY=your_gapgpt_key
+DATABASE_URL=postgres://user:password@host:5432/database
+```
+
+`DATABASE_URL` must point to a Postgres database with a `cafes` table and normalized scoring columns.
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.

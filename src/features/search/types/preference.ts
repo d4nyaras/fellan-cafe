@@ -1,3 +1,5 @@
+import type { RankedCafe } from "./cafe";
+
 export interface SearchPreferences {
   quiet: number;
   romantic: number;
@@ -10,4 +12,5 @@ export interface SearchPreferences {
 
 export interface SearchAnalysisResponse {
   preferences: SearchPreferences;
+  results: RankedCafe[];
 }
