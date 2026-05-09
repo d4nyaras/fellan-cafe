@@ -10,9 +10,16 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "prepare": "husky"
+    "prepare": "husky",
+    "type-check": "tsc --noEmit",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:studio": "prisma studio",
+    "db:reset": "prisma migrate reset --force"
   },
   "dependencies": {
+    "@prisma/client": "^7.8.0",
     "@tanstack/react-query": "^5.100.8",
     "clsx": "^2.1.1",
     "dotenv": "^17.4.2",
