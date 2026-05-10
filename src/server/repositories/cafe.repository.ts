@@ -1,15 +1,6 @@
-import postgres from "postgres";
-import { Cafe } from "../types/cafe";
+import type { Cafe } from "@/types/cafe";
 
-export class DatabaseConfigurationError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "DatabaseConfigurationError";
-  }
-}
-
-let sqlClient: postgres.Sql | null = null;
-
+import { getSqlClient } from "../db/postgres";
 type CafeRow = Omit<
   Cafe,
   | "quiet"
@@ -28,27 +19,6 @@ type CafeRow = Omit<
   suitable_for_solo: number | string | null;
   suitable_for_date: number | string | null;
 };
-
-function getDatabaseUrl() {
-  const databaseUrl = process.env.DATABASE_URL;
-
-  if (!databaseUrl) {
-    throw new DatabaseConfigurationError("DATABASE_URL is not configured");
-  }
-
-  return databaseUrl;
-}
-
-function getSqlClient() {
-  if (!sqlClient) {
-    sqlClient = postgres(getDatabaseUrl(), {
-      max: 3,
-      prepare: false,
-    });
-  }
-
-  return sqlClient;
-}
 
 function toNormalizedNumber(value: number | string | null) {
   const numericValue = Number(value);

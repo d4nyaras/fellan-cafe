@@ -11,6 +11,6 @@ export interface SearchPreferences {
 }
 
 export interface SearchAnalysisResponse {
+  cafes: RankedCafe[];
   preferences: SearchPreferences;
-  results: RankedCafe[];
 }

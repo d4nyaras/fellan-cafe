@@ -1,6 +1,6 @@
+import { SearchAnalysisResponse } from "@/features/search/types/preference";
 import { useMutation } from "@tanstack/react-query";
 
-import { SearchAnalysisResponse } from "@/features/search/types/preference";
 async function analyzeSearch(query: string): Promise<SearchAnalysisResponse> {
   const response = await fetch("/api/search/analyze", {
     method: "POST",

@@ -6,6 +6,7 @@ import { SearchResults } from "@/features/search/components/SearchResults";
 import { useSearchAnalysis } from "@/features/search/hooks/useSearchAnalysis";
 import { RankedCafe } from "@/features/search/types/cafe";
 import { SearchPreferences } from "@/features/search/types/preference";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 export default function SearchFlowPage() {
@@ -24,7 +25,7 @@ export default function SearchFlowPage() {
       analyzeSearch(query, {
         onSuccess: (data) => {
           setPreferences(data.preferences);
-          setResults(data.results);
+          setResults(data.cafes);
         },
         onError: () => {
           setPreferences(null);
@@ -58,14 +59,16 @@ export default function SearchFlowPage() {
     <main className="h-full">
       <div className="mx-auto flex h-full max-w-5xl flex-col px-4">
         <header className="flex items-center justify-between py-4 text-foreground">
-          <div className="text-sm font-semibold">CafeFinder</div>
+          <Link href="/">
+            <div className="text-sm font-semibold">CafeFinder</div>
+          </Link>
         </header>
 
         <div className="flex-1">
           {!activeQuery && <SearchHero onSearch={handleSearch} isLoading={isPending} />}
 
           {activeQuery && (
-            <section>
+            <section className="flex h-full flex-col">
               <SearchInput
                 key={activeQuery}
                 compact={true}
@@ -73,12 +76,14 @@ export default function SearchFlowPage() {
                 isLoading={isPending}
                 initialValue={activeQuery}
               />
-              <SearchResults
-                preferences={preferences}
-                results={results}
-                isLoading={isPending}
-                error={error?.message || null}
-              />
+              <div className="flex-1 overflow-y-auto">
+                <SearchResults
+                  preferences={preferences}
+                  results={results}
+                  isLoading={isPending}
+                  error={error?.message || null}
+                />
+              </div>
             </section>
           )}
         </div>

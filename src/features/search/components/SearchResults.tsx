@@ -21,7 +21,7 @@ const PREFERENCE_LABELS: Record<keyof SearchPreferences, string> = {
   suitable_for_date: "Suitable For Date",
 };
 
-export function SearchResults({ preferences, results, isLoading, error }: SearchResultsProps) {
+export function SearchResults({ preferences, results = [], isLoading, error }: SearchResultsProps) {
   if (isLoading) {
     return (
       <div className="mt-8 flex justify-center">
@@ -54,7 +54,6 @@ export function SearchResults({ preferences, results, isLoading, error }: Search
     <div className="mt-8 space-y-8">
       <section className="space-y-4">
         <h2 className="text-xl font-semibold text-foreground">Top cafe matches</h2>
-
         {results.length > 0 ? (
           <div className="max-h-[600px] space-y-4 overflow-auto pb-10">
             {results.map((cafe) => (
