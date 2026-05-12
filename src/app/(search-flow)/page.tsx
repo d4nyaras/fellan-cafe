@@ -57,7 +57,7 @@ export default function SearchFlowPage() {
 
   return (
     <main className="h-full">
-      <div className="mx-auto flex h-full max-w-5xl flex-col px-4">
+      <div className="mx-auto flex h-full max-w-5xl flex-col">
         <header className="flex items-center justify-between py-4 text-foreground">
           <Link href="/">
             <div className="text-sm font-semibold">CafeFinder</div>
@@ -68,15 +68,16 @@ export default function SearchFlowPage() {
           {!activeQuery && <SearchHero onSearch={handleSearch} isLoading={isPending} />}
 
           {activeQuery && (
-            <section className="flex h-full flex-col">
+            <section className="flex h-full min-h-0 flex-col">
               <SearchInput
                 key={activeQuery}
-                compact={true}
+                compact
                 onSearch={handleSearch}
                 isLoading={isPending}
                 initialValue={activeQuery}
               />
-              <div className="flex-1 overflow-y-auto">
+
+              <div>
                 <SearchResults
                   preferences={preferences}
                   results={results}

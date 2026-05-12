@@ -11,12 +11,7 @@ interface SearchInputProps {
   initialValue?: string;
 }
 
-export function SearchInput({
-  compact = false,
-  onSearch,
-  isLoading = false,
-  initialValue = "",
-}: SearchInputProps) {
+export function SearchInput({ onSearch, isLoading = false, initialValue = "" }: SearchInputProps) {
   const [value, setValue] = useState(initialValue);
 
   const handleSearch = () => {
@@ -32,12 +27,7 @@ export function SearchInput({
   };
 
   return (
-    <div
-      className={clsx(
-        "flex items-center rounded-2xl bg-surface/85 px-5 py-3 shadow-md",
-        compact ? "mt-4" : "mt-8",
-      )}
-    >
+    <div className={clsx("flex items-center rounded-2xl bg-surface/85 px-5 py-3 shadow-md")}>
       <FiSearch className="mr-4 text-muted" size={22} />
 
       <input

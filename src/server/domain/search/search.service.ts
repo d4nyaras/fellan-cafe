@@ -18,7 +18,7 @@ export async function searchCafes(query: string): Promise<SearchResult> {
   const ranked = rankCafes(cafes, preferences);
 
   return {
-    cafes: ranked.slice(0, 10),
+    cafes: ranked.slice(0, 3),
     preferences,
   };
 }
