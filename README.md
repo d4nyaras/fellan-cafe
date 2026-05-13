@@ -116,15 +116,12 @@ The system ranks cafés based on how well they match the user’s preferences.
 
 Create a `.env.local` file:
 
-
-`# Database
 DATABASE_URL=..."
 
-# GapGpt
 GAPGPT_API_KEY=...
 
-# App
 NODE_ENV="development"
+
 NEXT_PUBLIC_APP_URL="http://localhost:3000"`
 
 ### 4. Run the Development Server
