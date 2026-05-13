@@ -91,6 +91,7 @@ The system ranks cafés based on how well they match the user’s preferences.
 - Next.js
 - TypeScript
 - Tailwind CSS
+- React Query
 
 ### Backend
 
@@ -101,8 +102,7 @@ The system ranks cafés based on how well they match the user’s preferences.
 
 - GapGPT API (OpenAI-powered)
 - Natural language preference extraction
-- Structured recommendation scoring
-
+- 
 ## Local Development Setup
 
 ### 1. Clone the Repository
