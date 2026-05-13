@@ -1,47 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fellan Café
 
-## Getting Started
+Natural language café discovery powered by AI preference extraction and deterministic recommendations.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Overview
 
-## Environment
+Fellan Café is an MVP project that explores a simple idea: café discovery should feel more like how people actually talk.
 
-The search API needs these variables in `.env.local`:
+Most café or place‑discovery apps rely on rigid filters—WiFi, price, rating, location. While useful, these filters often miss the way people naturally describe places:
 
-```bash
-GAPGPT_API_KEY=your_gapgpt_key
-DATABASE_URL=postgres://user:password@host:5432/database
-```
+- “a quiet place to study”
+- “somewhere calm with good coffee”
+- “not too crowded”
+- “good for remote work”
 
-`DATABASE_URL` must point to a Postgres database with a `cafes` table and normalized scoring columns.
+Fellan Café experiments with using AI to interpret these natural descriptions and convert them into structured preferences that can be used by a recommendation system.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The goal is not to build a chatbot, but to combine natural language understanding with deterministic recommendation logic to produce explainable café suggestions.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+Home Page
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Features
 
-## Deploy on Vercel
+- Natural language café search
+- AI-powered preference extraction
+- Deterministic recommendation scoring
+- Explainable ranking logic
+- Clean and simple UI
+- Fast API-driven architecture
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The system intentionally keeps the AI layer limited to interpretation, while the ranking logic remains deterministic and transparent.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+---
+
+## How It Works
+
+The system separates **intent understanding** from **recommendation logic**.
+
+### 1. Natural Language Query
+
+The user describes what they are looking for:
+
+`quiet cafe with good wifi for studying`
+
+---
+
+### 2. Preference Extraction (AI)
+
+The query is sent to the AI layer (GapGPT / OpenAI API), which extracts structured preferences.
+
+Example structured output:
+
+`{   "noise_level": "quiet",   "wifi": "strong",   "purpose": "studying" }`
+
+The AI is only responsible for interpreting the user’s intent.
+
+---
+
+### 3. Deterministic Recommendation Engine
+
+Once preferences are extracted, the application uses a deterministic scoring system to evaluate cafés in the database.
+
+Each café is scored against the extracted preferences using weighted rules.
+
+Example factors:
+
+- noise level
+- WiFi quality
+- seating comfort
+- coffee quality
+- price range
+- crowd level
+
+The system ranks cafés based on how well they match the user’s preferences.
+
+---
+
+## Tech Stack
+
+### Frontend
+
+- Next.js
+- TypeScript
+- Tailwind CSS
+
+### Backend
+
+- Next.js API Routes
+- PostgreSQL
+
+### AI Layer
+
+- GapGPT API (OpenAI-powered)
+- Natural language preference extraction
+- Structured recommendation scoring
+
+## Local Development Setup
+
+### 1. Clone the Repository
+
+`git clone https://github.com/your-username/fellan-cafe.git cd fellan-cafe`
+
+### 2. Install Dependencies
+
+`npm install`
+
+### 3. Configure Environment Variables
+
+Create a `.env.local` file:
+
+
+`DATABASE_URL= OPENAI_API_KEY= NEXT_PUBLIC_APP_URL=http://localhost:3000`
+
+### 4. Run the Development Server
+
+`npm run dev`
+
+Open:
+
+`http://localhost:3000`
+
