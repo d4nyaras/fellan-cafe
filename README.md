@@ -32,9 +32,7 @@ Home Page
 - Natural language café search
 - AI-powered preference extraction
 - Deterministic recommendation scoring
-- Explainable ranking logic
 - Clean and simple UI
-- Fast API-driven architecture
 
 The system intentionally keeps the AI layer limited to interpretation, while the ranking logic remains deterministic and transparent.
 
@@ -60,7 +58,7 @@ The query is sent to the AI layer (GapGPT / OpenAI API), which extracts structur
 
 Example structured output:
 
-`{   "noise_level": "quiet",   "wifi": "strong",   "purpose": "studying" }`
+`{   "suitable_for_solo":0.8 ,   "quiet": 1,   "price_level":0 }`
 
 The AI is only responsible for interpreting the user’s intent.
 
@@ -108,7 +106,7 @@ The system ranks cafés based on how well they match the user’s preferences.
 
 ### 1. Clone the Repository
 
-`git clone https://github.com/your-username/fellan-cafe.git cd fellan-cafe`
+`git clone git@github.com:d4nyaras/fellan-cafe.git`
 
 ### 2. Install Dependencies
 
@@ -119,7 +117,15 @@ The system ranks cafés based on how well they match the user’s preferences.
 Create a `.env.local` file:
 
 
-`DATABASE_URL= OPENAI_API_KEY= NEXT_PUBLIC_APP_URL=http://localhost:3000`
+`# Database
+DATABASE_URL=..."
+
+# GapGpt
+GAPGPT_API_KEY=...
+
+# App
+NODE_ENV="development"
+NEXT_PUBLIC_APP_URL="http://localhost:3000"`
 
 ### 4. Run the Development Server
 
