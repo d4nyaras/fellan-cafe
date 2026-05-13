@@ -60,7 +60,7 @@ export default function SearchFlowPage() {
       <div className="mx-auto flex h-full max-w-5xl flex-col">
         <header className="flex items-center justify-between py-4 text-foreground">
           <Link href="/">
-            <div className="text-sm font-semibold">CafeFinder</div>
+            <div className="text-sm font-semibold">FellanCafe</div>
           </Link>
         </header>
 
