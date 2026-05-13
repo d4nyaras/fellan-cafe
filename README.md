@@ -22,8 +22,9 @@ The goal is not to build a chatbot, but to combine natural language understandin
 
 ---
 
-Home Page
+![Home Page](./public/screenshots/fellan-home.png)
 
+![Cafe Results](./public/screenshots/fellan-result.png)
 
 ---
 
